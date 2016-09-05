@@ -16,7 +16,13 @@ const store: IStore<any> = configureStore({});
 let gadgets: any = (window as any).gadgets;
 gadgets.util.registerOnLoadHandler(function(){
   ReactDOM.render(
-    <div>Test OK</div>,
+    <Provider store={store}>
+      <Router history={browserHistory}>
+        <Route path='/' component={App}>
+          <Route path="public/widget.html"  />
+        </Route>
+      </Router>
+    </Provider>,
     document.getElementById('app_container')
   );
 });
