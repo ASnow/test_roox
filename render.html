@@ -1,0 +1,298 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="html5shiv.js"></script>
+    <![endif]-->
+
+    <!--[if lt IE 8]>
+    <script>
+        // TODO: remove it later!!!
+        if (typeof window.JSON == 'undefined') {
+            window.JSON = { parse: function() { return {}; }, stringify: function() { return ''; } }
+        }
+    </script>
+    <![endif]-->
+
+    <script type="text/javascript" src="win8fix.js"></script>
+
+    <!--container configuration-->
+    <script type="text/javascript" src="container-configuration.js"></script>
+
+    <script type="text/javascript">
+        //Widgets should be stateless
+        var save = sessionStorage && sessionStorage.getItem('com.rooxteam.emulator.configuration');
+
+        localStorage && localStorage.clear();
+        sessionStorage && sessionStorage.clear();
+
+        if (save && sessionStorage)  {
+            sessionStorage.setItem('com.rooxteam.emulator.configuration', save);
+        }
+
+        //Disable stat for screenshots
+        containerConfiguration['com.rooxteam.statistic'].ENABLED = false;
+
+        var roox = roox || {};
+        //RESET some things not needed in screenshots
+
+        roox.stubDate = function(global){
+            global.oldDate = global.Date;
+            global.Date = function () {
+                var args = arguments.length > 0 ? Array.prototype.slice.call(arguments) : [1293861600];
+                var argsParams = [];
+                for (var i = 0, j = args.length; i < j; i++){
+                    argsParams.push(JSON.stringify(args[i]));
+                }
+                return new global.Function('return new oldDate(' + argsParams.join(',') + ');')();
+            };
+            global.Date.UTC = function () {
+                return global.oldDate.UTC.apply(global, arguments);
+            };
+            global.Date.now = function () {
+                return 1293861600;
+            };
+            global.Date.parse = function () {
+                return global.oldDate.parse.apply(global, arguments);
+            };
+        };
+
+        roox.disableAnimation = function(global){
+            global.$(['<style type="text/css">',
+                "* { ",
+                "-webkit-transition: none !important; ",
+                "-moz-transition: none !important; ",
+                "-o-transition: none !important; ",
+                "transition: none !important; ",
+                "animation-name: none !important; ",
+                /*CSS transitions*/
+                "-o-transition-property: none !important;",
+                "-moz-transition-property: none !important;",
+                "-ms-transition-property: none !important;",
+                "-webkit-transition-property: none !important;",
+                "transition-property: none !important;",
+                /*CSS animations*/
+                "-webkit-animation: none !important;",
+                "-moz-animation: none !important;",
+                "-o-animation: none !important;",
+                "-ms-animation: none !important;",
+                "animation: none !important;",
+                "} ",
+                "progress {",
+                "background-color: transparent !important; ",
+                "color: transparent !important; ",
+                "-webkit-appearance: none !important; ",
+                "-moz-appearance: none !important;  ",
+                "-ms-appearance: none !important; ",
+                "-o-appearance: none !important; ",
+                "appearance: none !important; ",
+                "} ",
+                "progress::-webkit-progress-bar-value, ",
+                "progress::-webkit-progress-value, ",
+                "progress::-moz-progress-bar {",
+                "background-color:transparent !important;",
+                "} ",
+                '</style>'
+            ].join("")
+            ).appendTo(global.$('head'));
+
+            global.$.fx.off = true;
+        }
+    </script>
+
+    <!--container initialization-->
+    <script type="text/javascript" src="container-init.js"></script>
+    <script type="text/javascript" src="container-api.js"></script>
+
+    <!--override default container implementation-->
+    <script type="text/javascript" src="container-override.js"></script>
+    <script type="text/javascript" src="container-io-override.js"></script>
+    <script type="text/javascript" src="container-util.js"></script>
+
+    <script type="text/javascript" src="eventsource.js"></script>
+
+    <!-- Dependencies -->
+
+    <script type="text/javascript" src="htmlmessage.js"></script>
+
+    <script type="text/javascript" src="absolute_path.js"></script>
+
+    <script type="text/javascript">
+        // TODO: review
+        $(window).load(function() {
+            gadgets.pubsub2router.init({
+                onSubscribe: function(topic, container) {
+                    return true; // return false to reject the request.
+                },
+                onPublish: function(topic, data, pcont, scont) {
+                    return true; // return false to reject the request.
+                },
+                onUnsubscribe: function(topic, container) {
+                }
+            });
+        });
+
+        // TODO: review
+        Host = { processMessageEvent: function() {}, getSessionStorageData: function() {} };
+    </script>
+
+    <script type="text/javascript" src="container_onload.js"></script>
+
+    <script>
+
+        String.prototype.endsWith = function (searchString, position) {
+            position = position || this.length;
+            position = position - searchString.length;
+            var lastIndex = this.lastIndexOf(searchString);
+            return lastIndex !== -1 && lastIndex === position;
+        };
+
+
+        function parseINIString(data){
+            var regex = {
+                section: /^\s*\[\s*([^\]]*)\s*\]\s*$/,
+                param: /^\s*([\w\.\-\_]+)\s*=\s*(.*?)\s*$/,
+                comment: /^\s*;.*$/
+            };
+            var value = {};
+            var lines = data.split(/\r\n|\r|\n/);
+            var section = null;
+            lines.forEach(function(line){
+                if(regex.comment.test(line)){
+                    return;
+                }else if(regex.param.test(line)){
+                    var match = line.match(regex.param);
+                    if(section){
+                        value[section][match[1]] = match[2];
+                    }else{
+                        value[match[1]] = match[2];
+                    }
+                }else if(regex.section.test(line)){
+                    var match = line.match(regex.section);
+                    value[match[1]] = {};
+                    section = match[1];
+                }else if(line.length == 0 && section){
+                    section = null;
+                };
+            });
+            return value;
+        }
+
+        var params = gadgets.util.getUrlParameters();
+        params['show_tree'] = (/(\?|&)show_tree($|&)/g).test(location.href);
+        function processRelativeWidgetPath(widgetPath) {
+            var l = document.createElement("a");
+            l.href = widgetPath;
+            return l.href;
+        }
+
+        $(window).load(function() {
+            if (typeof params['script'] != "undefined" && typeof params['widget'] != "undefined") {
+                loadWidget(document.getElementById('0'), processRelativeWidgetPath(params['widget']), {})
+                if(typeof params['bgcolor'] != "undefined") {
+                    jQuery("body").css("background-color", params['bgcolor']);
+                }
+            } else if(typeof params['widget'] != "undefined" && params['show_tree']) {
+                var widgetUrl = processRelativeWidgetPath(params['widget']);
+                var path = (widgetUrl.substring(0, widgetUrl.lastIndexOf('/')) || ".");
+                var name = widgetUrl.substring(0, widgetUrl.lastIndexOf('.xml'));
+                var fileName = widgetUrl.substring(widgetUrl.lastIndexOf('/')+1, widgetUrl.lastIndexOf('.xml'));
+
+                //detect our new file structure
+                if (name.toLowerCase().endsWith(fileName.toLowerCase() + '/' + fileName.toLowerCase())) {
+                    name = name + "/..";
+                }
+
+                var out = "";
+                function recTree(iniPath){
+                    $.ajax({
+                        url: iniPath + "/render.ini",
+                        async: false,
+                        dataType: 'html',
+                        error: function(jqXHR, textStatus, errorThrown){
+                            console.log("error retrieving render.ini", iniPath + "/render.ini", textStatus, errorThrown);
+                        },
+                        success: function(data, textStatus, jqxhr) {
+                            if(data){
+                                var metadata = parseINIString(data);
+                                for(var item in metadata) {
+                                    if(item !== "General"){
+                                        if(metadata[item]['file']){
+                                            out += "<ul>"
+                                            out += "<li>" + metadata[item]['name'] + "</li>";
+                                            recTree(iniPath + "/" + metadata[item]['file']);
+                                            out += "</ul>"
+                                        } else if(metadata[item]['script']){
+                                            out += "<ul>"
+                                            out += [
+                                                "<li>",
+                                                "<a href='" + location.href + "&script=" + iniPath + "/" + metadata[item]['script'],"'",
+                                                " test_height='", (metadata[item]['height'] || metadata["General"]['height']),"'",
+                                                " test_width='", (metadata[item]['width'] || metadata["General"]['width']),"'",
+                                                " bgcolor='", (metadata[item]['bgcolor'] || metadata["General"]['bgcolor'] || ""),"'",
+                                                ">",
+                                                (metadata[item]['name'] || metadata["General"]['name']),
+                                                "</a>",
+                                                "</li>"
+                                            ].join("");
+                                            out += "</ul>"
+                                        }
+                                    } else if(metadata[item]['root_name']) {
+                                        out += "<h3>" + metadata[item]['root_name'] + "</h3>";
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+
+                recTree(name +  "/screenshots");
+                document.getElementById('0').innerHTML = out;
+                $(document.getElementById('0')).css({
+                    position: "absolute",
+                    height: "100%",
+                    width: "100%",
+                    top: "0",
+                    overflow: "auto"
+                });
+
+                $('#0 a').click(function(){
+                    var url = $(this).attr('href');
+                    var name = $(this).text();
+                    url += "&bgcolor="+encodeURIComponent($(this).attr('bgcolor'));
+                    var height = $(this).attr('test_height');
+                    var width = $(this).attr('test_width');
+                    popupWin = window.open(url, name, "location,width="+width+",height="+height+",top=0");
+                    popupWin.focus();
+                    return false;
+                })
+            } else if(typeof params['widget'] != "undefined") {
+                var prefs = $.extend({},params);
+
+                delete prefs['widget'];
+                delete prefs['show_tree'];
+                delete prefs['script'];
+
+                loadWidget(document.getElementById('0'), params['widget'], prefs);
+            } else {
+                document.getElementById('0').innerHTML = [
+                    "<div style='margin: 50px auto; width: 30%'>",
+                    "<h1>Please pass one of following combination of parameters.</h1>",
+                    "<p>widget=... (you can also pass any other user pref and view param they proxied)</p>",
+                    "<p>widget=...&script=...</p>",
+                    "<p>widget=...&show_tree</p>",
+                    "</div>"
+                ].join("");
+            }
+        });
+    </script>
+
+</head>
+<body style="margin:0;overflow:hidden">
+
+<div id="0"></div>
+
+</body>
+</html>
