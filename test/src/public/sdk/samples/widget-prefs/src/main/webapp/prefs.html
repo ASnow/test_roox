@@ -1,0 +1,55 @@
+<div id="enum_div"></div>
+<div id="boolean_div"></div>
+<div id="number_div"></div>
+<div id="list_div"></div>
+<div id="set_div">
+    Set the pref value: <input id="setPrefInput" type="text" /><br />
+    <button id="setPrefBtn" type="button" onclick="setPref()">Set the pref</button>
+</div>
+<script type="text/javascript">
+    function setPref(){
+        var prefs = new gadgets.Prefs();
+        prefs.set("set_pref", document.getElementById("setPrefInput").value);
+    }
+
+    function displayMsg(){
+        var enumDiv = document.getElementById('enum_div');
+        var boolDiv = document.getElementById('boolean_div');
+        var listDiv = document.getElementById('list_div');
+        var numberDiv = document.getElementById('number_div');
+        var setPrefDiv = document.getElementById('set_div');
+        // Get userprefs
+        var prefs = new gadgets.Prefs();
+
+        // enumDiv
+        enumDiv.style.color = prefs.getString("enum_pref");
+        var enumDivHtml = "<br><h1>";
+        enumDivHtml += "Hello, ";
+        enumDivHtml += prefs.getString("hello_pref");
+        enumDivHtml += " in " + prefs.getString("enum_pref");
+        enumDivHtml +=  "</h1>";
+        enumDiv.innerHTML = enumDivHtml;
+
+        // boolDiv
+        boolDiv.innerHTML = "Boolean: " + prefs.getBool("boolean_pref");
+
+        // number div
+        numberDiv.innerHTML = "Number: " + prefs.getInt("number_pref");
+
+        // listDiv
+        var aList = prefs.getArray("list_pref");
+        var listDivHtml = "<ul>";
+        for(var i = 0; i < aList.length; i++) {
+            listDivHtml += "<li>";
+            listDivHtml += aList[i];
+            listDivHtml += "</li>";
+        }
+        listDivHtml += "</ul>";
+        listDiv.innerHTML = listDivHtml;
+
+        // set pref div
+
+        gadgets.window.adjustHeight();
+    }
+    gadgets.util.registerOnLoadHandler(displayMsg);
+</script>

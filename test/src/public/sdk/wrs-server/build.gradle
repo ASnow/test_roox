@@ -1,0 +1,51 @@
+buildscript {
+    repositories {
+		maven { 
+			url = 'http://repo.rooxteam.com/customers/content/repositories/roox.releases'
+            if (project.hasProperty('rooxUser') && project.hasProperty('rooxPassword')) {           
+				credentials {               
+					username project.ext.rooxUser                 
+					password project.ext.rooxPassword             
+                }
+            }
+        }
+ 		maven { 
+			url = 'http://repo.rooxteam.com/customers/content/groups/public'
+            if (project.hasProperty('rooxUser') && project.hasProperty('rooxPassword')) {           
+				credentials {               
+					username project.ext.rooxUser                 
+					password project.ext.rooxPassword             
+                }
+            }
+        }
+        mavenLocal()
+    }
+    dependencies {
+        classpath "com.rooxteam:gradle-wrs-plugin:${gradleWrsPluginVersion}"
+    }
+}
+
+apply plugin: 'com.rooxteam.sdk.wrs-server'
+
+
+repositories {
+    maven {
+        url = 'http://repo.rooxteam.com/customers/content/repositories/roox.releases'
+        if (project.hasProperty('rooxUser') && project.hasProperty('rooxPassword')) {
+            credentials {
+                username project.ext.rooxUser
+                password project.ext.rooxPassword
+            }
+        }
+    }
+    maven {
+        url = 'http://repo.rooxteam.com/customers/content/groups/public'
+        if (project.hasProperty('rooxUser') && project.hasProperty('rooxPassword')) {
+            credentials {
+                username project.ext.rooxUser
+                password project.ext.rooxPassword
+            }
+        }
+    }
+    mavenLocal()
+}

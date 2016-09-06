@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Module>
+    <ModulePrefs author="RooX Solutions" author_email="support@roox.ru" height="200px" title="Welcome Gadget" description="Welcome people to the OpenSocial widgets" width="100%">
+        <Require feature="minimessage" />
+    </ModulePrefs>
+    <UserPref datatype="string" name="serviceId"/>
+    <Content content-type="text/html" type="html" href="main.html" ></Content>
+</Module>

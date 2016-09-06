@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Module>
+    <ModulePrefs author="RooX Solutions" author_email="support@roox.ru" height="100%" title="Messages" version="1.0-SNAPSHOT" width="100%">
+        <Require feature="core.io"/>
+    </ModulePrefs>
+    <Content content-type="text/html" type="html">
+        <![CDATA[
+            <script language="javascript" type="text/javascript">
+                gadgets.util.registerOnLoadHandler(function(){
+                     //повышаем уровень логирования
+                     sessionStorage.setItem('com.roox.cm.Common.App.Properties.unit.IsLogEnabled', true);
+
+                     gadgets.log('Наш виджет начал работать.');
+					 gadgets.error('Что-то пошло не так - ошибка!')
+                });
+            </script>
+        ]]>
+    </Content>
+</Module>

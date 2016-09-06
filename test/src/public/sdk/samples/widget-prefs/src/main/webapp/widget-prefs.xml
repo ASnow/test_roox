@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+  <ModulePrefs title="Preferences Gadget" description="Tests setting and getting user preferences." width="320" height="400">
+  <Require feature="setprefs"/>
+  <Require feature="settitle"/>
+  <Require feature="dynamic-height"/>
+  </ModulePrefs>
+  <UserPref name="hello_pref" display_name="Name" default_value="World" datatype="string" required="true"/>
+  <UserPref name="number_pref" display_name="Number" default_value="0" datatype="string" required="true"/>
+  <UserPref name="list_pref" display_name="List" default_value="foo|bar|foobar" datatype="list" required="true"/>
+  <UserPref name="boolean_pref" display_name="Boolean" default_value="false" datatype="bool" required="true"/>
+  <UserPref name="enum_pref" display_name="Enum" default_value="Red" datatype="enum" required="true">
+    <EnumValue value="Red" display_value="Red"/>
+    <EnumValue value="Green" display_value="Green"/>
+    <EnumValue value="Blue" display_value="Blue"/>
+    <EnumValue value="Gray" display_value="Gray"/>
+    <EnumValue value="Purple" display_value="Purple"/>
+    <EnumValue value="Black" display_value="Black"/>
+  </UserPref>
+  <UserPref name="set_pref" display_name="Set this preference" datatype="string" required="false"/>
+    <Content content-type="text/html" type="html" href="prefs.html" ></Content>
+</Module>

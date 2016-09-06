@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Module>
+    <ModulePrefs author="RooX Solutions" author_email="support@roox.ru" height="100%" title="Messages" version="1.0-SNAPSHOT" width="100%">
+    </ModulePrefs>
+    <Content content-type="text/html" type="html" renderTypesSupported="iframe">
+        This text is rendered only when in iframe
+    </Content>
+     <Content content-type="text/html" type="html" renderTypesSupported="inline">
+        This text is rendered only when widget is inlined in some CMS controlled page
+    </Content>
+     <Content content-type="text/html" type="html" renderTypesSupported="iframe,inline">
+        This text is rendered always
+    </Content>
+     <Content content-type="text/html" type="html">
+        This text is rendered always also
+    </Content>
+</Module>

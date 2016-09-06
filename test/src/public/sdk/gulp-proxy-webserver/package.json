@@ -1,0 +1,21 @@
+{
+  "name": "gulp-proxy-webserver",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "gulp": "~3.8.8",
+    "gulp-util": "~3.0.1",
+    "gulp-jshint": "~1.8.4",
+    "jshint-stylish": "~1.0.0",
+    "lodash": "*"
+  },
+  "devDependencies": {
+    "gulp-webserver": "^0.9.1"
+  }
+}

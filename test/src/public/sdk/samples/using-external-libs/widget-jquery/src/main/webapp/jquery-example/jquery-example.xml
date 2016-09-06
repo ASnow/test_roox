@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Module>
+    <ModulePrefs author="RooX Solutions" author_email="support@roox.ru" height="100%" title="Using jQuery" version="1.0-SNAPSHOT" width="100%">
+    	<Require feature="org.jquery.core-1.7.2"/>
+    </ModulePrefs>
+    <Content content-type="text/html" type="html">
+        <![CDATA[
+			<script type="text/javascript">
+			 
+				gadgets.util.registerOnLoadHandler(function(){
+				 	$("#msgid").html("This is Hello World by JQuery");
+				});
+			 
+			</script>
+			 
+			This is Hello World by RooX Widget using jQuery
+			 
+			<div id="msgid">
+			</div>				
+				
+        ]]>
+    </Content>
+
+
+
+</Module>

@@ -1,0 +1,18 @@
+*.class
+
+# Package Files #
+*.war
+*.ear
+
+# target dirs
+target
+
+# idea dirs and files
+.idea
+*.iml
+*.ipr
+
+
+wrs-server/.gradle
+wrs-server/atlassian-ide-plugin.xml
+wrs-server/build

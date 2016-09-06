@@ -1,0 +1,10 @@
+{
+  "name": "package-name-here",
+  "version": "0.0.0",
+  "devDependencies": {
+    "rx-grunt-tasks": "0.2.7"
+    },
+  "peerDependencies": {
+    "grunt": ">=0.4"
+  }
+}

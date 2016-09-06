@@ -1,0 +1,32 @@
+#tab {
+    height: 32px;
+    border-bottom: 1px solid #D5D5D5;
+    margin-top: 10px;
+    padding: 0;
+}
+
+#tab li {
+    margin: 0px 8px -2px 0px;
+    padding: 4px 19px 2px 15px;
+    float: left;
+    color: #2F2F2F;
+    background: #F7F7F5;
+    border: 1px solid #D5D5D5;
+    border-bottom: none;
+    list-style: none;
+    height: 25px;
+    cursor: pointer;
+}
+
+#tab li a {
+    color: #444;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+#tab li.active {
+    height: 26px;
+    background-color: #ffffff;
+}
+
+

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+    <ModulePrefs title="SwitchWidget" width="100%" height="100%" author_email="support@roox.ru" author="RooX Solutions"
+                 version="2.1">
+        <Require feature="views"/>
+        <Require feature="com.rooxteam.config"/>
+        <Require feature="com.rooxteam.sharedcontext"/>
+        <Require feature="com.rooxteam.iso.date"/>
+        <Require feature="opensocial-i18n"/>
+        <Require feature="dynamic-height"/>
+        <Require feature="org.jquery.core-1.7.2"/>
+        <Require feature="com.rooxteam.auth"/>
+        <Optional feature="com.rooxteam.container"/>
+    </ModulePrefs>
+    <Content content-type="text/html; charset=utf-8" build-source="html/main.html" type="html">
+        <![CDATA[
+    <link rel="stylesheet" href="SwitchWidget/css/style.css" type="text/css">
+
+    <script type="text/javascript" src="SwitchWidget/js/plugin/jquery.tmpl.min.js"></script>
+
+    <script type="text/javascript" src="SwitchWidget/js/Locale.js"></script>
+    <script type="text/javascript" src="SwitchWidget/js/UITemplate.js"></script>
+    <script type="text/javascript" src="SwitchWidget/js/UIController.js"></script>
+
+    <script language="javascript" type="text/javascript">
+        function init() {
+            try {
+                roox.UIController = new roox.UIController(__MODULE_ID__);
+            } catch (e) {
+                gadgets.log(e)
+            }
+        }
+        function body_onUnload() {
+            try {
+                roox.UIController.dispose();
+            }
+            catch (e) {
+                gadgets.log(e)
+            }
+        }
+
+        gadgets.util.registerOnLoadHandler(init);
+    </script>
+
+        <div id="widget__MODULE_ID__" style="width:100%; height: 100%;"></div>
+        ]]>
+    </Content>
+</Module>

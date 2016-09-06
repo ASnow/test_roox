@@ -1,0 +1,17 @@
+<configuration>
+
+    <!-- enable generic configuration reloading-->
+    <header>
+        <result forceReloadCheck="true">
+        </result>
+    </header>
+
+    <!--enable environment config with UTF-8 encoding and reloading with delay = 60 sec-->
+    <properties fileName="env.properties" encoding="UTF-8">
+        <reloadingStrategy refreshDelay="60000"
+                           config-class="org.apache.commons.configuration.reloading.FileChangedReloadingStrategy"/>
+    </properties>
+
+    <!--enable application wide config with UTF-8 encoding and no reloading-->
+    <properties fileName="app.properties" encoding="UTF-8" />
+</configuration>
