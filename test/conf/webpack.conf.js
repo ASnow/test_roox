@@ -49,6 +49,14 @@ module.exports = {
       template: conf.path.src('index.ejs'),
       inject: false
     }),
+    new HtmlWebpackPlugin({
+      template: conf.path.src('components/pages/main/main.ejs'),
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: conf.path.src('components/menu/menu.ejs'),
+      inject: false
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new CopyWebpackPlugin([{ from: conf.path.src('public'), to: path.join(process.cwd(), conf.paths.tmp, 'public') }], {copyUnmodified: true})
   ],

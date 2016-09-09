@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Module>
+   <ModulePrefs author="Andrey Bolshov" author_email="asnow.dev@gmail.com" width="100%" height="100%" title="TestWidgets" version="1.0">
+        <Require feature="com.rooxteam.webapi"/>
+        <Require feature="com.rooxteam.webapi.stub"/>
+   </ModulePrefs>
+   <Content content-type="text/html" type="html">
+       <![CDATA[
+          <script language="javascript" type="text/javascript">
+                gadgets.util.registerOnLoadHandler(function(){
+                  try{
+                    com.rooxteam.webapistub.news.get().execute(function(data) {
+                      if (data.result) {
+                          var news = data.result;
+                          document.getElementById("NEWS_SIZE").innerHTML = news.length;
+                          document.getElementById("NEWS").innerHTML = news;
+                      } else if (data.error && data.error.code) {
+                          document.getElementById("NEWS_SIZE").innerHTML = data.error.message;
+                      } else {
+                          gadgets.error("Unknown error");
+                      }
+                    });
+                    }catch(e){
+                      console.log(e);
+                    }
+                });
+          </script>
+          <div>Количество новостей: <span id="NEWS_SIZE">NEWS_SIZE</span></div>
+          <div>Новости: <span id="NEWS">NEWS</span></div>
+          <script language="javascript" type="text/javascript">
+                gadgets.util.registerOnLoadHandler(function(){
+                  $.get("/public/data.json").done(function(data){
+                    document.getElementById("DATA_SIZE").innerHTML = data.length;
+                    document.getElementById("DATA").innerHTML = data.map(function(item){
+                      return item.name;
+                    });
+                  })
+                });
+          </script>
+          <div>Количество псевдо данных: <span id="DATA_SIZE">DATA_SIZE</span></div>
+          <div>Псевдо данных: <span id="DATA">DATA</span></div>
+       ]]>
+   </Content>
+</Module>

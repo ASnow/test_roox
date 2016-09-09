@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Module>
+   <ModulePrefs author="Andrey Bolshov" author_email="asnow.dev@gmail.com" width="100%" height="100%" title="TestWidgets" version="1.0">
+      <Require feature="com.rooxteam.auth"/>  
+   </ModulePrefs>
+   <Content content-type="text/html" type="html">
+       <![CDATA[
+          <script language="javascript" type="text/javascript">
+              var mid=__MODULE_ID__; 
+              gadgets.util.registerOnLoadHandler(function(){
+                var token = shindig.auth.getSecurityToken(),
+                    status = com.rooxteam.auth.isAuthenticated();
+                document.getElementById("TOKEN").innerHTML = mid;
+                document.getElementById("STATUS").innerHTML = status;
+                com.rooxteam.auth.requestAuthentication(function(){
+                  console.log("auth callback");
+                }, "scope", "state");
+              });
+          </script>
+          <div>TOKEN авторизации: <span id="TOKEN">TOKEN</span></div>
+          <div>Статус авторизации: <span id="STATUS">STATUS</span></div>
+       ]]>
+   </Content>
+</Module>

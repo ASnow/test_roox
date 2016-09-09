@@ -40,8 +40,49 @@ module.exports = {
       template: conf.path.src('index.ejs'),
       inject: false
     }),
+    new HtmlWebpackPlugin({
+      template: conf.path.src('components/pages/main/main.ejs'),
+      filename: 'components/pages/main/main.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: conf.path.src('components/menu/menu.ejs'),
+      filename: 'components/menu/menu.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: conf.path.src('components/viewer.ejs'),
+      filename: 'components/viewer.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: conf.path.src('components/view_changer.ejs'),
+      filename: 'components/view_changer.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: conf.path.src('components/module_id.ejs'),
+      filename: 'components/module_id.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: conf.path.src('components/params.ejs'),
+      filename: 'components/params.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: conf.path.src('components/auth.ejs'),
+      filename: 'components/auth.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: conf.path.src('components/web_api.ejs'),
+      filename: 'components/web_api.html',
+      inject: false
+    }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"'
+      'process.env.NODE_ENV': '"production"',
+      'process.env.BASE_URL': '"http://localhost:3000/"'
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {unused: true, dead_code: true} // eslint-disable-line camelcase
